@@ -1,5 +1,7 @@
 import React from 'react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { UseShowsStore } from '@/stores/shows';
+import { Input } from '../ui/input';
 
 interface Props {
     className?: string;
@@ -8,40 +10,39 @@ interface Props {
 const filterTriggerWidth = "w-[180px]";
 
 export const Filters: React.FC<Props> = ({ className }) => {
+    const { artists, locations} = UseShowsStore();
     return (
-        <div className={`flex flex-wrap justify-center gap-4 mt-6  ${className}`}>
-            <Select>
-                <SelectTrigger className={`${filterTriggerWidth} text-neutral-900 cursor-pointer`}>
-                    <SelectValue placeholder="Artist" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="artist_1" className="cursor-pointer">Пример Артиста А</SelectItem>
-                    <SelectItem value="artist_2" className="cursor-pointer">Пример Артиста Б</SelectItem>
-                    <SelectItem value="artist_3" className="cursor-pointer">Пример Артиста В</SelectItem>
-                </SelectContent>
-            </Select>
+    <div>
+      <div className="flex justify-between mt-4">
 
-            <Select>
-                <SelectTrigger className={`${filterTriggerWidth} text-neutral-900 cursor-pointer`}>
-                    <SelectValue placeholder="Location" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="location_1" className="cursor-pointer">Пример Места X</SelectItem>
-                    <SelectItem value="location_2" className="cursor-pointer">Пример Места Y</SelectItem>
-                    <SelectItem value="location_3" className="cursor-pointer">Пример Места Z</SelectItem>
-                </SelectContent>
-            </Select>
+        <Select>
+          <SelectTrigger className="w-full me-4">
+            <SelectValue placeholder="Artist" />
+          </SelectTrigger>
+          <SelectContent>
+            {artists.map((artist) => (
+              <SelectItem key={artist} value={artist}>
+                {artist}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
-            <Select>
-                <SelectTrigger className={`${filterTriggerWidth} text-neutral-900 cursor-pointer`}>
-                    <SelectValue placeholder="Date" />
-                </SelectTrigger>
-                <SelectContent>
-                    <SelectItem value="date_today" className="cursor-pointer">Сегодня</SelectItem>
-                    <SelectItem value="date_this_week" className="cursor-pointer">На этой неделе</SelectItem>
-                    <SelectItem value="date_this_month" className="cursor-pointer">В этом месяце</SelectItem>
-                </SelectContent>
-            </Select>
-        </div>
+        <Select>
+          <SelectTrigger className="w-full me-4">
+            <SelectValue placeholder="Location" />
+          </SelectTrigger>
+          <SelectContent>
+            {locations.map((location) => (
+              <SelectItem key={location} value={location}>
+                {location}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+        
+        <Input type="date" />
+      </div>
+    </div>
     );
 }

@@ -1,17 +1,21 @@
+import { Show } from "@/@types/show";
 import { Api } from "@/services/api";
 import { create } from "zustand";
 
 interface showsStoreProps {
-  shows: any[];
+  shows: Show[];
+  _shows: Show[];
   isLoading: boolean;
   artists: string[];
   locations: string[];
 
   fetchShows: () => Promise<void>;
+  filterShows: (artist: string, location: string, date: string) => void;
 }
 
-export const UseShowsStore = create<showsStoreProps>((set) => ({
+export const UseShowsStore = create<showsStoreProps>((set, get) => ({
   shows: [],
+  _shows: [],
   isLoading: false,
   artists: [],
   locations: [],
@@ -19,9 +23,13 @@ export const UseShowsStore = create<showsStoreProps>((set) => ({
   fetchShows: async () => {
     set({ isLoading: true });
     const shows = await Api.shows.getAll();
-    set({ shows });
+    set({ shows, _shows: shows });
     set({ artists: [...new Set(shows.map((show: any) => show.artist))] });
     set({ locations: [...new Set(shows.map((show: any) => show.location))] });
     set({ isLoading: false });
   },
+
+  filterShows: (artist: string, location: string, date: string) => {
+    let shows = [...get()._shows];
+  }
 }));
