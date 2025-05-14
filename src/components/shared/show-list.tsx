@@ -19,7 +19,7 @@ export const ShowList: React.FC<Props> = ({ className }) => {
         ? Array.from({ length: 10 }).map((_, i) => (
             <Skeleton key={i} className="h-[250px] w-[250px]" />
           ))
-        : shows.map((show) => <Link key={show.id} href={'shows/${show.id}/book'}> <ShowCard  show={show} /> </Link>)}
+        : shows.map((show) => <Link key={show.id} href={`shows/${show.id}/book`}> <ShowCard  show={show} /> </Link>)}
     </div>
   );
 };

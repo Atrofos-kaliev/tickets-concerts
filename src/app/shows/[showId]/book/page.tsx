@@ -1,6 +1,4 @@
 'use client';
-
-import { ArtistCard } from "@/app/shows/[showId]/book/components/artistcard";
 import { PlaceShow } from "./components/placeshow";
 import { SelectedPlaces } from "./components/selectedplaces";
 import { Container } from "@/components/shared/container";

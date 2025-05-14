@@ -10,7 +10,7 @@ interface Props {
 
 export const ShowCard: React.FC<Props> = ({ className, show }) => {
     return (
-        <Card className={cn("text-center", className)}>
+        <Card className={cn(className)}>
             <CardContent className="text-center">
                 <p> {show.date} </p>
                 <CardTitle className="text-xl my-2"> {show.artist} </CardTitle>

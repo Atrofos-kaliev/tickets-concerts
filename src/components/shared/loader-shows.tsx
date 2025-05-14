@@ -16,7 +16,7 @@ export const LoaderShows: React.FC<Props> = ({className, children}) => {
         fetchShows();
       }, []);
     return (
-                <div>{isLoading ? <ClimbingBoxLoader color="#8b00ed" /> : children}</div>
+                <div className="flex justify-center items-center h-screen">{isLoading ? <ClimbingBoxLoader color="#8b00ed" /> : children}</div>
 
     )
 }
