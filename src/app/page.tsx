@@ -9,10 +9,12 @@ import { useEffect } from 'react';
 
 
 export default function Home() {
-  const { shows, fetchShows } = UseShowsStore();
+
+  const { fetchShows } = UseShowsStore();
   useEffect(() => {
     fetchShows();
   }, []);
+
   return (
     <> 
     <Title className='mt-4'>Checkout these  amazing concerts in Graz.</Title>

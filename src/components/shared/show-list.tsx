@@ -1,18 +1,23 @@
 import React from 'react';
 import { ShowCard } from './show-card';
 import { cn } from '@/lib/utils';
-
+import { UseShowsStore } from '@/stores/shows';
+import { Skeleton } from '../ui/skeleton';
 
 interface Props {
-    className?: string;
+  className?: string;
 }
 
 export const ShowList: React.FC<Props> = ({ className }) => {
-    return (
-            <div className={cn('grid grid-cols-4 gap-4 mt-6', className)}>
-                {
-                    [1, 2, 3, 4, 5, 6, 7, 8 ].map((_, i) => <ShowCard key={i} />)
-                }
-            </div>
-    );
-}
+  const { shows, isLoading } = UseShowsStore();
+
+  return (
+    <div className={cn('grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-6', className)}>
+      {isLoading
+        ? Array.from({ length: 10 }).map((_, i) => (
+            <Skeleton key={i} className="h-[250px] w-[250px]" />
+          ))
+        : shows.map((show) => <ShowCard key={show.id} show={show} />)}
+    </div>
+  );
+};
