@@ -31,5 +31,15 @@ export const UseShowsStore = create<showsStoreProps>((set, get) => ({
 
   filterShows: (artist: string, location: string, date: string) => {
     let shows = [...get()._shows];
+    if (artist) {
+      shows = shows.filter((show) => show.artist === artist);
+    }
+    if (location) {
+      shows = shows.filter((show) => show.location === location);
+    }
+    if (date) {
+      shows = shows.filter((show) => show.date === new Date(date).toLocaleDateString());
+    }
+    set({ shows });
   }
 }));
