@@ -1,8 +1,10 @@
+'use client';
 import React from 'react';
 import { ShowCard } from './show-card';
 import { cn } from '@/lib/utils';
 import { UseShowsStore } from '@/stores/shows';
 import { Skeleton } from '../ui/skeleton';
+import Link from 'next/link';
 
 interface Props {
   className?: string;
@@ -17,7 +19,7 @@ export const ShowList: React.FC<Props> = ({ className }) => {
         ? Array.from({ length: 10 }).map((_, i) => (
             <Skeleton key={i} className="h-[250px] w-[250px]" />
           ))
-        : shows.map((show) => <ShowCard key={show.id} show={show} />)}
+        : shows.map((show) => <Link key={show.id} href={'shows/${show.id}/book'}> <ShowCard  show={show} /> </Link>)}
     </div>
   );
 };

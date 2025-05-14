@@ -11,6 +11,7 @@ interface showsStoreProps {
 
   fetchShows: () => Promise<void>;
   filterShows: (artist: string, location: string, date: string) => void;
+  getShowById: (id: number) => Show | undefined;
 }
 
 export const UseShowsStore = create<showsStoreProps>((set, get) => ({
@@ -41,5 +42,11 @@ export const UseShowsStore = create<showsStoreProps>((set, get) => ({
       shows = shows.filter((show) => show.date === new Date(date).toLocaleDateString());
     }
     set({ shows });
+  },
+
+  getShowById: (id: number) => {
+    return get()._shows.find((show) => show.id === id);
   }
+
+
 }));
