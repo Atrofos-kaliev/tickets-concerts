@@ -1,7 +1,12 @@
 import { Row } from "@/@types/row";
-import { apiInstance } from "./api-instance";
+import { ApiInstance } from "./api-instance";
 
-export const getAll =  async (concertId: number, showId: number):Promise<Row[]> => {
-    const res = await apiInstance.get<Row[]>(`/concerts/${concertId}/shows/${showId}/seating`);
-    return res.data;
-}
+export const getAll = async (
+  concertId: number,
+  showId: number
+): Promise<Row[]> => {
+  const res = await ApiInstance.get<{ rows: Row[] }>(
+    `/concerts/${concertId}/shows/${showId}/seating`
+  );
+  return res.data.rows;
+};
