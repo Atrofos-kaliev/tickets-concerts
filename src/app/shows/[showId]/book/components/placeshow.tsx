@@ -1,21 +1,8 @@
 import { cn } from "@/lib/utils";
 import { useRowsStore } from "@/stores/rows";
-import { use } from "react";
-
-
 interface Props {
   className: string;
 }
-
-
-
-
-
-
-
-
-
-
 export const PlaceShow: React.FC<Props> = ({ className }) => {
   const SeatCircle = ({ isPink }: { isPink?: boolean }) => (
     <div
@@ -48,7 +35,7 @@ export const PlaceShow: React.FC<Props> = ({ className }) => {
   );
 
   const rows = useRowsStore((state) => state.rows);
-  
+
   return (
     <div className="lg:col-span-2">
       <div className="p-6 border rounded-4xl bg-white shadow-md border-gray-950">
@@ -59,16 +46,14 @@ export const PlaceShow: React.FC<Props> = ({ className }) => {
         </div>
 
         <div className="space-y-0.5 overflow-x-auto pb-3">
-          {
-            rows.map((row, index) => (
-              <SeatStaticRow
-            label={row.name}
-            seatsCount={row.seats.total}
-            pinkIndices={row.seats.unavailable}
-          />
-            ))
-          }
-          
+          {rows.map((row, index) => (
+            <SeatStaticRow
+              key={row.id}
+              label={row.name}
+              seatsCount={row.seats.total}
+              pinkIndices={row.seats.unavailable}
+            />
+          ))}
         </div>
       </div>
     </div>
