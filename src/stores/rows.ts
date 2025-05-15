@@ -1,6 +1,6 @@
 import { Row } from "@/@types/row";
 import { Api } from "@/services/api";
-import { AxiosResponse, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import { create } from "zustand";
 
 interface RowsStoreProps {

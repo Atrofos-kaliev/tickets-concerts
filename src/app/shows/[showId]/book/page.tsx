@@ -6,19 +6,24 @@ import { Title } from "@/components/shared/title";
 import { InputDetails } from "./components/inputdetails";
 import { Booking } from "./components/booking";
 import { useParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ShowCard } from "@/components/shared/show-card";
 import { UseShowsStore } from "@/stores/shows";
+import { useRowsStore } from "@/stores/rows";
 
 
 export default function BookShowPage() {
   const { getShowById } = UseShowsStore();
+  const { rows, fetchRows } = useRowsStore();
   const params = useParams<{showId:string}>();
   const [isBooking, setBooking] = useState(false);
   const show = getShowById(Number(params.showId));
   if (!show) {
     return <div>Show not found</div>;
   }
+  useEffect(() => {
+    fetchRows(show.concertId, show.id);
+  }, [])
 
   return (
     <Container className="py-8">

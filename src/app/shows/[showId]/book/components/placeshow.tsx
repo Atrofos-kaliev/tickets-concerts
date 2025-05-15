@@ -1,7 +1,21 @@
 import { cn } from "@/lib/utils";
+import { useRowsStore } from "@/stores/rows";
+import { use } from "react";
+
+
 interface Props {
   className: string;
 }
+
+
+
+
+
+
+
+
+
+
 export const PlaceShow: React.FC<Props> = ({ className }) => {
   const SeatCircle = ({ isPink }: { isPink?: boolean }) => (
     <div
@@ -32,7 +46,9 @@ export const PlaceShow: React.FC<Props> = ({ className }) => {
       </div>
     </div>
   );
-  const totalSeatsPerRow = 14;
+
+  const rows = useRowsStore((state) => state.rows);
+  
   return (
     <div className="lg:col-span-2">
       <div className="p-6 border rounded-4xl bg-white shadow-md border-gray-950">
@@ -43,46 +59,16 @@ export const PlaceShow: React.FC<Props> = ({ className }) => {
         </div>
 
         <div className="space-y-0.5 overflow-x-auto pb-3">
-          <SeatStaticRow
-            label="Stall 01"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[]}
+          {
+            rows.map((row, index) => (
+              <SeatStaticRow
+            label={row.name}
+            seatsCount={row.seats.total}
+            pinkIndices={row.seats.unavailable}
           />
-          <SeatStaticRow
-            label="Stall 02"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[11]}
-          />
-          <SeatStaticRow
-            label="Stall 03"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[4]}
-          />
-          <SeatStaticRow
-            label="Stall 04"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[6, 7, 8]}
-          />
-          <SeatStaticRow
-            label="Stall 05"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[]}
-          />
-          <SeatStaticRow
-            label="Stall 06"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[]}
-          />
-          <SeatStaticRow
-            label="Terrace 01"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[5, 6, 7]}
-          />
-          <SeatStaticRow
-            label="Terrace 02"
-            seatsCount={totalSeatsPerRow}
-            pinkIndices={[0, 1]}
-          />
+            ))
+          }
+          
         </div>
       </div>
     </div>
