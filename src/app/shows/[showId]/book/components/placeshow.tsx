@@ -1,9 +1,17 @@
 import { cn } from "@/lib/utils";
+import { useReservationStore } from "@/stores/reservation";
 import { useRowsStore } from "@/stores/rows";
+import { toast, useSonner } from "sonner";
 interface Props {
   className: string;
+  concertId: number;
+  showId: number;
 }
-export const PlaceShow: React.FC<Props> = ({ className }) => {
+export const PlaceShow: React.FC<Props> = ({
+  className,
+  concertId,
+  showId,
+}) => {
   const SeatCircle = ({
     isPink,
     isSelected,
@@ -54,14 +62,37 @@ export const PlaceShow: React.FC<Props> = ({ className }) => {
   );
 
   const rows = useRowsStore((state) => state.rows);
-  const handleClickSeat = (e: React.MouseEvent<HTMLDivElement>) => {
+  const {
+    selectedSeats,
+    isLoading,
+    addSelectedSeat,
+    removeSelectedSeat,
+    reservation,
+  } = useReservationStore();
+  const handleClickSeat = async (e: React.MouseEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
     const seat = target.dataset.seat;
     if (!seat) return;
     const rowId = (target.closest("[data-row-id]") as HTMLDivElement | null)
       ?.dataset.rowId;
     if (!rowId || target.classList.contains("bg-rose-200")) return;
-    console.log(`Row: ${rowId}, Seat: ${seat}`);
+    if (target.classList.contains("bg-green-300 ")) {
+      target.classList.remove("bg-green-300 border-green-500");
+      target.classList.add("bg-white border-gray-400");
+      removeSelectedSeat(Number(rowId), Number(seat));
+    } else {
+      target.classList.add("bg-green-300 border-green-500");
+      target.classList.remove("bg-white");
+      target.classList.remove("border-gray-400");
+      addSelectedSeat(Number(rowId), Number(seat));
+    }
+    try {
+      await reservation(concertId, showId);
+    } catch (error) {
+      if (typeof error === "string") {
+      toast(error)}
+      
+    }
   };
 
   return (

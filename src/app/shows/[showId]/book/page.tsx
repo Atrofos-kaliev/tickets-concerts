@@ -31,7 +31,7 @@ export default function BookShowPage() {
   {
   !isBooking 
   ? <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <PlaceShow className="" />
+        <PlaceShow concertId={show.concertId} showId={show.id} className="" />
         <SelectedPlaces className="" showId={params.showId} />
       </div>
   : <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-4 mt-6">
