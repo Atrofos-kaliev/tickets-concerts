@@ -1,3 +1,5 @@
+//@types/show.ts
+
 export type Show = {
     id: number;
     artist: string;

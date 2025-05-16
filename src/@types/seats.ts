@@ -1,3 +1,5 @@
+//@types/seats.ts
+
 export interface SeatType {
     id: string;
     number: number;
